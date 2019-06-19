@@ -3,7 +3,7 @@ const mongoose = require('mongoose'); //import mongoose
 const bodyParser = require('body-parser'); //import body parser
 
 const routes = require('./route/api'); //import routes
-const dbConfig = require('./config/db.config'); // inport database config
+const dbConfig = require('./config/db.config'); // import database config
 
 const app = express(); //initialize express
 
