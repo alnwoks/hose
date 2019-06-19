@@ -1,5 +1,5 @@
 module.exports = {
-	url: "mongodb://localhost:27017/hose",
+	url: "mongodb://127.0.0.1:27017/hose", //set to localhost
 	options: {
 		useNewUrlParser: true
 	}
