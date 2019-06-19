@@ -10,13 +10,15 @@ router.get('/', (req, res, err) => {
 		Grafana.findById({_id: req.query.id}).then((data) => {
 			res.send(data);
 		}).catch(() => {
-			res.send(err);
+			res.status(422).send(err);
+			console.log('Error occured during GET:' + err);
 		});
 	} else {
 		Grafana.find({}).then((data) => {
 			res.send(data);
 		}).catch((err) => {
-			console.log(err);
+			console.log('Error occured during GET: ' + err);
+			res.status(422).send(err);
 		});
 	}
 });
@@ -26,9 +28,10 @@ router.get('/', (req, res, err) => {
 router.post('/', (req, res, err) => {
 	Grafana.create(req.body).then((data) => {
 		res.send(data._id);
+		console.log('POST operation successful: ' + data);
 		}).catch((err) => {
 			res.status(422).send(err);
-			console.log('error occured during post');
+			console.log('Error occured during POST: ' + err);
 	});
 });
 
@@ -36,12 +39,15 @@ router.post('/', (req, res, err) => {
 // update selected record in the grafana collection
 router.put('/:id', (req, res, err) => {
 	Grafana.findByIdAndUpdate(req.params.id, req.body, {useFindAndModify: false}).then((data) => {
-		console.log(data);
+		res.send(data);
+		console.log('PUT operation successful: '+ data);
 	}).catch((err) => {
 		res.status(422).send(err);
+		console.log('Error occured during PUT: ' + err);
 	});
 	Grafana.findById(req.params.id).then((data) => {
 		res.send(data);
+		console.log('PUT operation successful: '+ data);
 	});
 });
 
@@ -50,7 +56,7 @@ router.put('/:id', (req, res, err) => {
 router.delete('/:id', (req, res, err) => {
 	let id = req.params.id;
 	Grafana.deleteOne({_id: id}).then((data) => {
-		console.log(data);
+		console.log('Data deleted: ' + data);
 		if (data.deletedCount == 0) {
 			res.send('Document with ID: ' + id + ' was not found.');
 		} else {
@@ -58,6 +64,7 @@ router.delete('/:id', (req, res, err) => {
 		}
 	}).catch((err) => {
 		res.status(422).send(err);
+		console.log('Error occured during DELETE: ' + err);
 	});
 });
 
