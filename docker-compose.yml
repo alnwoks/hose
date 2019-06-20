@@ -1,0 +1,21 @@
+version: "2"
+services:
+  app:
+    container_name: hose-master
+    restart: on-failure
+    build: .
+    ports:
+      - "2000:2000"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    restart: on-failure
+    volumes:
+      - mongodbvolume:/data/db
+    ports:
+      - "27017:27017"
+volumes: 
+  mongodbvolume:
